@@ -138,7 +138,7 @@ export const authenticate = async (opts) => {
       userHandle
     };
   }
-  
+
   localStorage.setItem(`credId`, credential.id);
 
   return await _fetch(`/auth/signinResponse`, credential);
