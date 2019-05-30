@@ -701,7 +701,6 @@ packages:
     dev: false
     name: fido2-lib
     resolution:
-      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/agektmr/fido2-lib/tar.gz/176857c50b3d8b46bc0e55b4c46aa659e4ee9fb4'
     version: 2.1.1
 registry: 'https://registry.npmjs.org/'
