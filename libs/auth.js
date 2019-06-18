@@ -243,6 +243,11 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
         });
       }
     }
+    response.pubKeyCredParams = [];
+    const params = [-7, -35, -36, -257, -258, -259, -37, -38, -39, -8];
+    for (let param of params) {
+      response.pubKeyCredParams.push({type:'public-key', alg: param});
+    }
     const as = {}; // authenticatorSelection
     const aa = req.body.authenticatorSelection.authenticatorAttachment;
     const rr = req.body.authenticatorSelection.requireResidentKey;
@@ -385,20 +390,22 @@ router.post('/signinRequest', csrfCheck, async (req, res) => {
     response.challenge = coerceToBase64Url(response.challenge, 'challenge');
     res.cookie('challenge', response.challenge);
 
-    // Leave `allowCredentials` empty unless `credId` is specified
+    // Fill `allowCredentials` with all known credentials
+    // or one that is specified.
     if (user.credentials.length > 0) {
       response.allowCredentials = [];
-      if (credId) {
-        for (let cred of user.credentials) {
-          if (cred.credId == credId) {
-            response.allowCredentials.push({
-              id: cred.credId,
-              type: 'public-key',
-              transports: ['internal']
-            });
-          }
+      for (let cred of user.credentials) {
+        // When credId is not specified, or matches the one specified
+        if (!credId || cred.credId == credId) {
+          response.allowCredentials.push({
+            id: cred.credId,
+            type: 'public-key',
+            transports: ['internal']
+          });
         }
       }
+      // TODO: What if there is no credentials filled at this point?
+      // TODO: Should we fill?
     }
 
     res.json(response);
