@@ -100,6 +100,7 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
   }
   res.json(assetlinks);
 });
+
 app.use('/auth', auth);
 
 // listen for req :)
