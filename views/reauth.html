@@ -40,7 +40,7 @@
       </h2>
       <form id="form" method="POST" action="/auth/password" >
         <input type="hidden" name="username" value="{{username}}" />
-        <div  class="mdc-text-field">
+        <div class="mdc-text-field">
           <input type="password" class="mdc-text-field__input" name="password" />
           <div class="mdc-line-ripple"></div>
           <label class="mdc-floating-label">password</label>
@@ -62,7 +62,7 @@
         .then(user => {
           location.href = '/home';
         })
-        .catch(e => alert(e.message || e));
+        .catch(e => alert(e));
       });
 
       authenticate({}).then(user => {
@@ -70,7 +70,7 @@
           location.href = '/home';
         }
       }).catch(e => {
-        console.error(e);
+        console.error(e.message || e);
         alert('Authentication failed. Use password to sign-in.');
       });
     </script>
